@@ -1,3 +1,4 @@
 # mysqlrepo
-Este es un repositorio que contiene codigo SQL de casos de estudio y ejercicios de ejemplo. 
-Desarrollados en una base de datos MySQL.
+Repositorio de MySQL. 
+Este repositorio contiene scripts DDL y DML para la creacion y manipulacion de datos de bases de datos de ejemplo. 
+ 
