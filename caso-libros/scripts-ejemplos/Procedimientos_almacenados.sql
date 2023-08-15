@@ -70,5 +70,73 @@ BEGIN
 END; 
 
 
+/*
+    Procedimientos almacenados con parametros
+*/
+
+delimiter //
+CREATE PROCEDURE sp_check_entrega(
+	in p_fecha datetime, 
+    p_n_meses int  
+) 
+BEGIN 
+	#declarar variable para calcular el mes anterior. 
+    declare v_mes_anterior datetime default null; 
+    declare v_fecha datetime; 
+    set v_fecha = p_fecha; 
+    
+    #Calcular fecha del mes anterior
+    set v_mes_anterior = date_add( v_fecha , interval -p_n_meses month );    
+    
+    update bd_biblios.tblcontroluso set detalles = "ENTREGA ANTICIPADA" 
+	where   date_format(fechasalida, '%Y%m') = date_format(v_mes_anterior, '%Y%m')
+	and fechaentrega < fechaEntrada; 
+    
+    select p_fecha fecha_parametro, v_mes_anterior fecha_cal;
+    
+    commit;
+END; 
+
+/*
+    Ejecutar
+*/
+
+call bd_biblios.sp_check_entrega( 
+	str_to_date("2023-06-01","%Y-%m-%d")  
+); 
 
 
+
+/*
+	Procedimiento almacenado para guardar un nuevo editorial
+    Uso de sentencias if	
+*/
+
+call bd_biblios.sp_insr_editorial(
+	1000, "Editorial Libritos", "Honduras", "Tegucigalpa"
+)
+
+drop procedure bd_biblios.sp_insr_editorial;
+
+delimiter //
+create procedure bd_biblios.sp_insr_editorial(
+	in p_codEditorial int, 
+	in p_editorial    varchar(45), 
+	in p_pais		  varchar(45),
+	in p_ciudad		  varchar(45) 
+)
+begin 
+	declare v_conteo int default 0; 
+    
+	#validar si existe el registro con codigo de editorial 
+    select count(*)  into v_conteo
+    from tbleditoriales where codeditorial = p_codEditorial;
+    
+    if v_conteo = 0 then  
+		insert into tbleditoriales (
+			codEditorial,  	 nombre,  		pais,  		ciudad
+		) values(
+			p_codEditorial, p_editorial, 	p_pais, 	p_ciudad
+		);  
+	end if; 
+end; 
