@@ -106,37 +106,3 @@ call bd_biblios.sp_check_entrega(
 ); 
 
 
-
-/*
-	Procedimiento almacenado para guardar un nuevo editorial
-    Uso de sentencias if	
-*/
-
-call bd_biblios.sp_insr_editorial(
-	1000, "Editorial Libritos", "Honduras", "Tegucigalpa"
-)
-
-drop procedure bd_biblios.sp_insr_editorial;
-
-delimiter //
-create procedure bd_biblios.sp_insr_editorial(
-	in p_codEditorial int, 
-	in p_editorial    varchar(45), 
-	in p_pais		  varchar(45),
-	in p_ciudad		  varchar(45) 
-)
-begin 
-	declare v_conteo int default 0; 
-    
-	#validar si existe el registro con codigo de editorial 
-    select count(*)  into v_conteo
-    from tbleditoriales where codeditorial = p_codEditorial;
-    
-    if v_conteo = 0 then  
-		insert into tbleditoriales (
-			codEditorial,  	 nombre,  		pais,  		ciudad
-		) values(
-			p_codEditorial, p_editorial, 	p_pais, 	p_ciudad
-		);  
-	end if; 
-end; 
