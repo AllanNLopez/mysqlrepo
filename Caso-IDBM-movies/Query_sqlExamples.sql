@@ -78,3 +78,34 @@ select
 group by sub.director 
 order by avg( sub.recaudacion ) desc 
 ;
+
+
+
+/*
+
+	SQL JOINS
+*/
+
+
+
+select
+	t1.Rank,
+	t1.Name titulo, 
+    t2.YearRelease estreno, 
+    t1.IMDBRating,
+    -- t2.certificate, 
+    case 
+		when t2.certificate = 'U' then 'TP' 
+        when t2.certificate = 'A' or t2.certificate = 'R' then '18+'
+        when t2.certificate = 'UA' then '12+' 
+        when t2.certificate = 'PG' then 'GP' 
+        else 'Otro'
+	end clasificion, 
+    t2.genre,
+    t2.director 
+from recuperacion.topmovies t1 
+inner join (
+	select a.*, a.year yearrelease from recuperacion.movies a 
+) t2
+on ( replace( lower(t1.name), ' ','') = replace( lower(t2.title), ' ', ''))
+ 
