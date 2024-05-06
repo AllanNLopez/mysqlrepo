@@ -108,4 +108,44 @@ inner join (
 	select a.*, a.year yearrelease from recuperacion.movies a 
 ) t2
 on ( replace( lower(t1.name), ' ','') = replace( lower(t2.title), ' ', ''))
- 
+
+
+/*
+
+*/
+
+
+
+/*
+		2000, 2003, 2007
+*/
+
+
+select * from recuperacion.movies t 
+where t.year in (
+	select x.YearRelease from recuperacion.topmovies x  
+	where x.IMDBRating > 8.9 AND X.YearRelease > 2000
+);
+
+select * from recuperacion.movies t 
+where exists (
+	select x.* from recuperacion.topmovies x  
+	where 
+		x.IMDBRating > 8.9 AND 
+        X.YearRelease > 2000 and 
+        t.year =  X.YearRelease 
+);
+
+
+
+/*
+	t.year = 2000 or 
+    t.year = 2003 or 
+    t.year = 2007 ;*/
+
+select 
+	/*row_number() over() orden, */
+	row_number() over(partition by x.YearRelease order by x.IMDBRating desc ) ordenxanio , 
+	x.* 
+from recuperacion.topmovies x  
+where x.IMDBRating > 8.5;
