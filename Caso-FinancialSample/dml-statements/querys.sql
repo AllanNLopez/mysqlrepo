@@ -24,6 +24,11 @@ where
 
 
 delete from db_demo.currencies where currency_id = 2;
+
+INSERT INTO currencies (currency_name, currency_symbol, iso_code, exchange_rate, country)
+VALUES
+    ('Lempira', 'L', 'HNL', 24.9, 'HONDURAS');
+    
 /*
 select * from db_demo.currencies;
 update db_demo.currencies set exchange_rate = 20.48 where currency_id = 5;
