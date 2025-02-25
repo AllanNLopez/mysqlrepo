@@ -14,5 +14,5 @@ BEGIN
 END;
 
 /* 1 USD = 149.86Y  */
-
+/*comentariop*/
 Call db_demo.sp_upd_currency(149.40, 9)
