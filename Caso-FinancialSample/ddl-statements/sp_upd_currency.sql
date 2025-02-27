@@ -1,3 +1,9 @@
+/*
+	Actualizar la tasa solo si, el valor de tasa de cambio
+    es no nulo y es mayor que cero. De lo contrario no hacer cambios.     
+    Ademas debe el currency_ID > 0 
+*/
+
 
 /*
 	Actualizar la tasa solo si, el valor de tasa de cambio
@@ -6,6 +12,7 @@
 
 delimiter // 
 drop procedure sp_upd_currency; 
+
 
 DELIMITER //
 CREATE procedure sp_upd_currency(
@@ -20,6 +27,14 @@ BEGIN
 	ELSE
 		select "No se puede actualizar";
 	END IF;
+<<<<<<< Updated upstream
 END;
 
 Call db_demo.sp_upd_currency(149.40, 9)
+=======
+END; 
+
+select * from db_demo.currencies WHERE CURRENCY_ID = 9;
+
+Call db_demo.sp_upd_currency(0, 9)
+>>>>>>> Stashed changes
