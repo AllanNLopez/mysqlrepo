@@ -30,13 +30,14 @@ BEGIN
     END LOOP;      
     select vsecuencia ;
     */
-    
+    /*
     WHILE vContador1 < p_max DO 		
         set vsecuencia = concat(vsecuencia ," ", vContador1) ;        
         set vContador1 = vContador1 + 1;   
     END WHILE;      
     select vsecuencia ;
-        
+    */
+    
 END; 
 
 
